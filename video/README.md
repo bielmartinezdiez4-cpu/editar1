@@ -1,54 +1,39 @@
-# Remotion video
+# Viral edit pipeline (Remotion)
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Auto-edita un MP4 vertical (9:16) en estilo TikTok/Reels/Shorts 2026: subtítulos
+word-by-word estilo Hormozi, auto-zoom con punch en keywords, pattern interrupts,
+vignette dinámica, hook badges y barra de progreso.
 
-Welcome to your Remotion project!
+## Estructura
 
-## Commands
+- `public/input.mp4` — clip de origen 9:16.
+- `src/captions.json` — transcripción word-level `{captions: [{text,startMs,endMs,timestampMs}]}`.
+- `src/viral/` — composición y capas (AutoZoom, Subtitles, PatternInterrupt, HookBadge, Vignette, ProgressBar).
+- `src/viral/classify.ts` — detector de keywords: money (`$`, `€`, `%`), multipliers (`20x`), profit (vendí, compré, beneficio, profit...), hooks (mira, hoy, secreto...).
+- `scripts/transcribe.mjs` — pipeline whisper.cpp → captions.json.
 
-**Install Dependencies**
+## Ejecutar
 
-```console
-npm i
+```bash
+npm install
+# Coloca tu clip vertical en public/input.mp4
+npm run viralize          # transcribe + render → out/viral.mp4
+# o por separado:
+npm run transcribe
+npm run render
+npm run dev               # Remotion Studio para previsualizar
 ```
 
-**Start Preview**
+## Tunear
 
-```console
-npm run dev
-```
+- Cambia el modelo Whisper en `scripts/transcribe.mjs` (`tiny | base | small | medium | large-v3`).
+- Ajusta keywords en `src/viral/constants.ts`.
+- Cambia `VIDEO_DURATION_SECONDS` en `src/viral/constants.ts` si el input dura otra cosa.
+- Edita los badges del hook en `src/viral/HookBadge.tsx`.
 
-**Render video**
+## Estado del render generado en esta sesión
 
-```console
-npx remotion render
-```
-
-**Upgrade Remotion**
-
-```console
-npx remotion upgrade
-```
-
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+Esta sesión generó `out/viral.mp4` (no commiteado, `.gitignore`) usando un
+`captions.json` **placeholder** porque el sandbox bloquea HuggingFace y no se
+pudieron descargar los modelos Whisper. Sustituye `src/captions.json` por la
+transcripción real y vuelve a renderizar con `npm run render`.
