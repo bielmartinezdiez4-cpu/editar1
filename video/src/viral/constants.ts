@@ -6,11 +6,13 @@ export const VIDEO_DURATION_SECONDS = 17.275;
 export const MONEY_REGEX = /(\$|€|£)\s?[0-9][0-9.,]*[kKmM]?/;
 export const PERCENT_REGEX = /[0-9]+\s?%/;
 export const MULTIPLIER_REGEX = /\b\d+x\b/i;
+export const NUMBER_REGEX = /^\d+$/;
 export const KEYWORDS_PROFIT = [
   'profit', 'beneficio', 'gané', 'gane', 'vendí', 'vendi',
   'compré', 'compre', 'reventa', 'flip', 'flipping', 'ganar',
 ];
 export const KEYWORDS_HOOK = [
   'mira', 'escucha', 'atención', 'atencion', 'hoy', 'ahora',
-  'secreto', 'método', 'metodo', 'truco',
+  'secreto', 'método', 'metodo', 'truco', 'empiezo', 'nuevo',
+  'quiero', 'puedo', 'llegar',
 ];

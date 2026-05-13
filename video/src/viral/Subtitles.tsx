@@ -9,6 +9,7 @@ const COLORS: Record<Kind, {bg: string; fg: string; stroke: string}> = {
   money:      {bg: '#00C853', fg: '#FFFFFF', stroke: '#003D1F'},
   percent:    {bg: '#00C853', fg: '#FFFFFF', stroke: '#003D1F'},
   multiplier: {bg: '#FFD600', fg: '#0A0A0A', stroke: '#000000'},
+  number:     {bg: '#FFD600', fg: '#0A0A0A', stroke: '#000000'},
   profit:     {bg: '#00C853', fg: '#FFFFFF', stroke: '#003D1F'},
   hook:       {bg: '#FF1744', fg: '#FFFFFF', stroke: '#3A0006'},
   normal:     {bg: 'transparent', fg: '#FFFFFF', stroke: '#000000'},

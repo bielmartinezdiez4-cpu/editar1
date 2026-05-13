@@ -2,10 +2,11 @@ import React from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring} from 'remotion';
 
 const BADGES: {start: number; end: number; text: string; color: string}[] = [
-  {start: 0.0, end: 2.0, text: '🔥 NO HAGAS SWIPE', color: '#FF1744'},
-  {start: 4.6, end: 6.6, text: '💸 PROFIT REAL', color: '#00C853'},
-  {start: 8.6, end: 10.7, text: '⚡ 20X EN UN DÍA', color: '#FFD600'},
-  {start: 13.0, end: 15.5, text: '👀 HASTA EL FINAL', color: '#FF1744'},
+  {start: 0.0, end: 1.27, text: '🔥 DÍA 1', color: '#FF1744'},
+  {start: 1.95, end: 3.0, text: '👀 SOLO 17 AÑOS', color: '#FFD600'},
+  {start: 6.7, end: 8.3, text: '🚫 NO COMO TODOS', color: '#FF1744'},
+  {start: 8.9, end: 9.98, text: '👕 ROPA REAL', color: '#00C853'},
+  {start: 14.8, end: 16.76, text: '🚀 SEMANA 0', color: '#00C853'},
 ];
 
 export const HookBadge: React.FC = () => {
