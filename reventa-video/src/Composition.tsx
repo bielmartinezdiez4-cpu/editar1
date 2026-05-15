@@ -1,6 +1,8 @@
 import {
   AbsoluteFill,
+  Audio,
   Sequence,
+  staticFile,
   useCurrentFrame,
   interpolate,
 } from "remotion";
@@ -149,6 +151,7 @@ const SUBTITLES: SubtitleCue[] = [
 export const ReventaVideo: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: COLORS.bg }}>
+      <Audio src={staticFile("voiceover.mp3")} />
       <Background />
 
       <Sequence from={HOOK_START} durationInFrames={HOOK_LEN}>
