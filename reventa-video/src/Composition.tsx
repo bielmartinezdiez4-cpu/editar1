@@ -28,122 +28,127 @@ const FINALE_START = 840;
 const FINALE_LEN = 360; // 28-40s
 
 const SUBTITLES: SubtitleCue[] = [
-  // HOOK 0-3s
+  // Para 1 (audio 0.00 - 4.56s): "La mayoría piensa que la reventa es solo comprar barato y vender caro."
+  { from: 0, duration: 53, text: "La mayoría piensa que la reventa…" },
   {
-    from: 14,
-    duration: 38,
-    text: "La mayoría piensa que la reventa…",
-  },
-  {
-    from: 52,
-    duration: 38,
+    from: 60,
+    duration: 74,
     text: "…es solo comprar barato y vender caro.",
     highlight: "barato",
   },
 
-  // DEMAND 3-12s
+  // Para 2 (audio 5.21 - 8.68s): "Pero los que realmente ganan dinero, entienden algo diferente."
   {
-    from: 92,
-    duration: 60,
-    text: "Pero los que realmente ganan dinero…",
+    from: 156,
+    duration: 50,
+    text: "Pero los que ganan dinero…",
     highlight: "ganan dinero",
   },
   {
-    from: 152,
-    duration: 60,
+    from: 212,
+    duration: 47,
     text: "…entienden algo diferente.",
     highlight: "diferente",
   },
+
+  // Para 3 (audio 9.42 - 13.15s): "La clave es encontrar productos que la gente quiere antes que los demás."
   {
-    from: 220,
-    duration: 64,
+    from: 283,
+    duration: 53,
     text: "La clave es encontrar productos…",
     highlight: "encontrar",
   },
   {
-    from: 286,
-    duration: 70,
+    from: 340,
+    duration: 54,
     text: "…que la gente quiere antes que los demás.",
     highlight: "antes",
   },
 
-  // EXAMPLE 12-28s
+  // Para 4 (audio 13.92 - 17.48s): "Alguien encuentra una cámara antigua por solo veinte euros."
   {
-    from: 366,
-    duration: 60,
+    from: 418,
+    duration: 50,
     text: "Alguien encuentra una cámara antigua…",
     highlight: "cámara",
   },
   {
-    from: 426,
+    from: 472,
     duration: 50,
     text: "…por solo 20 euros.",
     highlight: "20 euros",
   },
+
+  // Para 5 (audio 17.98 - 22.14s): "La limpia, hace mejores fotos, y crea un anuncio mejor que el resto."
   {
-    from: 482,
-    duration: 56,
-    text: "La limpia y hace mejores fotos.",
+    from: 539,
+    duration: 55,
+    text: "La limpia, hace mejores fotos…",
     highlight: "mejores fotos",
   },
   {
-    from: 540,
-    duration: 56,
-    text: "Crea un anuncio mejor que el resto.",
+    from: 599,
+    duration: 63,
+    text: "…y crea un anuncio mejor que el resto.",
     highlight: "mejor",
   },
+
+  // Para 6 (audio 22.79 - 25.77s): "Empiezan a llegar mensajes, uno tras otro."
   {
-    from: 604,
-    duration: 56,
-    text: "Y empiezan a llegar mensajes…",
+    from: 684,
+    duration: 43,
+    text: "Empiezan a llegar mensajes…",
     highlight: "mensajes",
   },
   {
-    from: 666,
-    duration: 50,
+    from: 731,
+    duration: 41,
     text: "…uno tras otro.",
   },
+
+  // Para 7 (audio 26.49 - 29.04s): "Días después, alguien la compra por ochenta."
   {
-    from: 722,
-    duration: 50,
-    text: "Días después…",
-  },
-  {
-    from: 774,
-    duration: 60,
-    text: "…alguien la compra por 80.",
+    from: 795,
+    duration: 76,
+    text: "Días después… la compra por 80.",
     highlight: "80",
   },
 
-  // FINALE 28-40s
+  // Para 8 (audio 29.52 - 31.33s): "La reventa no consiste en suerte."
   {
-    from: 846,
-    duration: 56,
+    from: 886,
+    duration: 53,
     text: "La reventa no consiste en suerte.",
     highlight: "suerte",
   },
+
+  // Para 9 (audio 31.82 - 34.44s): "Consiste en detectar valor, antes que los demás."
   {
-    from: 906,
-    duration: 50,
+    from: 955,
+    duration: 45,
     text: "Consiste en detectar valor…",
     highlight: "valor",
   },
   {
-    from: 958,
-    duration: 56,
+    from: 1003,
+    duration: 35,
     text: "…antes que los demás.",
     highlight: "antes",
   },
+
+  // Para 10 (audio 34.78 - 36.55s): "Y yo voy a aprender cómo hacerlo."
   {
-    from: 1020,
-    duration: 60,
+    from: 1043,
+    duration: 52,
     text: "Y yo voy a aprender cómo hacerlo.",
     highlight: "aprender",
   },
+
+  // Para 11 (audio 37.22 - 38.75s): "Parte 2. Mañana."
   {
-    from: 1082,
-    duration: 100,
-    text: "Parte 2 mañana.",
+    from: 1117,
+    duration: 75,
+    text: "Parte 2 · mañana.",
     highlight: "Parte 2",
   },
 ];
