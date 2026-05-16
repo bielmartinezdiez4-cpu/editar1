@@ -11,6 +11,11 @@ import {
   EP3_FPS,
   EP3_DURATION_FRAMES,
 } from "./ep3/Composition";
+import {
+  Trailer,
+  TRAILER_FPS,
+  TRAILER_DURATION_FRAMES,
+} from "./trailer/Composition";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -36,6 +41,14 @@ export const RemotionRoot: React.FC = () => {
         component={ReventaEp3Video}
         durationInFrames={EP3_DURATION_FRAMES}
         fps={EP3_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="Trailer"
+        component={Trailer}
+        durationInFrames={TRAILER_DURATION_FRAMES}
+        fps={TRAILER_FPS}
         width={1080}
         height={1920}
       />
