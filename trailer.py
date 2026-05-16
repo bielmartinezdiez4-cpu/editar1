@@ -9,6 +9,7 @@ Run from a folder containing:
     escena1.jpg ... escena5.jpg
 
 Missing images fall back to a black background; missing audio is skipped.
+Works with moviepy 2.x.
 """
 
 import importlib
@@ -22,7 +23,7 @@ import traceback
 # Auto-install dependencies
 # --------------------------------------------------------------------------
 REQUIRED = [
-    ("moviepy", "moviepy==1.0.3"),
+    ("moviepy", "moviepy"),
     ("PIL", "Pillow"),
     ("numpy", "numpy"),
 ]
@@ -43,13 +44,15 @@ ensure_deps()
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-from moviepy.editor import (
+from moviepy import (
     AudioFileClip,
     CompositeAudioClip,
     CompositeVideoClip,
     ImageClip,
     VideoClip,
+    afx,
     concatenate_videoclips,
+    vfx,
 )
 
 
@@ -236,13 +239,15 @@ def build_scene(spec, index, total):
     background = ken_burns_clip(pil_img, duration)
 
     text_arr = make_text_image(spec["text"], spec["font_size"])
-    text_clip = ImageClip(text_arr).set_duration(duration)
+    text_clip = ImageClip(text_arr).with_duration(duration)
     y_pos = int(HEIGHT * 0.75) - text_clip.h // 2
-    text_clip = text_clip.set_position(("center", y_pos)).fadein(0.5)
+    text_clip = text_clip.with_position(("center", y_pos)).with_effects(
+        [vfx.FadeIn(0.5)]
+    )
 
     return CompositeVideoClip(
         [background, text_clip], size=(WIDTH, HEIGHT)
-    ).set_duration(duration)
+    ).with_duration(duration)
 
 
 def build_audio(total_duration):
@@ -254,8 +259,10 @@ def build_audio(total_duration):
         try:
             music = AudioFileClip(music_path)
             if music.duration > total_duration:
-                music = music.subclip(0, total_duration)
-            music = music.volumex(0.4).audio_fadein(1.0).audio_fadeout(2.0)
+                music = music.subclipped(0, total_duration)
+            music = music.with_volume_scaled(0.4).with_effects(
+                [afx.AudioFadeIn(1.0), afx.AudioFadeOut(2.0)]
+            )
             tracks.append(music)
         except Exception as e:
             print(f"[warn] Could not load musica.mp3: {e}")
@@ -268,7 +275,7 @@ def build_audio(total_duration):
         try:
             voice = AudioFileClip(voice_path)
             if voice.duration > total_duration:
-                voice = voice.subclip(0, total_duration)
+                voice = voice.subclipped(0, total_duration)
             tracks.append(voice)
         except Exception as e:
             print(f"[warn] Could not load veuenoff.mp3: {e}")
@@ -288,7 +295,7 @@ def main():
     for i, spec in enumerate(SCENES, start=1):
         scene = build_scene(spec, i, len(SCENES))
         if clips:
-            scene = scene.crossfadein(CROSSFADE)
+            scene = scene.with_effects([vfx.CrossFadeIn(CROSSFADE)])
         clips.append(scene)
 
     print(f"[compose] Concatenating with {CROSSFADE}s crossfades")
@@ -296,7 +303,7 @@ def main():
 
     audio = build_audio(video.duration)
     if audio is not None:
-        video = video.set_audio(audio)
+        video = video.with_audio(audio)
 
     output_path = os.path.join(BASE_DIR, OUTPUT_NAME)
     print(f"[render] Writing {OUTPUT_NAME}  (~{video.duration:.1f}s)")
