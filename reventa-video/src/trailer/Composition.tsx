@@ -14,68 +14,113 @@ import { interFamily } from "../fonts";
 export const TRAILER_FPS = 30;
 export const TRAILER_DURATION_FRAMES = 870; // 29s
 
-// Audio anchors (frames @30fps) derived from silence detect on voiceover.mp3
-//   ~ 0     pre-roll silence
-//   ~ 58    "Algo se viene."
-//   ~ 124   "Voy a hacer algo que nadie te está contando."
-//   ~ 277   "Cada flip."
-//   ~ 309   "Cada error."
-//   ~ 322   "Cada euro real."
-//   ~ 405   "Sin filtros. Sin atajos."
-//   ~ 590   (atmosphere / breath)
-//   ~ 732   "¿Te vienes?"
+// Audio anchors (frames @30fps) derived from silencedetect:
+//
+//   frame  s     content
+//   0      0.00  pre-roll silence
+//   58     1.93  "Algo se viene."
+//   124    4.12  "Voy a hacer algo…"
+//   201    6.71  "…que nadie te está contando."
+//   276    9.21  "Cada flip."
+//   305    10.17 "Cada error."
+//   322    10.75 "Cada euro real."
+//   405    13.50 "Sin filtros."
+//   489    16.30 "Sin atajos."
+//   589    19.62 (atmosphere / continuation)
+//   732    24.39 "¿Te vienes?"
 
 export const Trailer: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: BRAND_BLACK }}>
       <Audio src={staticFile("trailer/voiceover.mp3")} />
 
-      {/* SCENE 1 — Pre-roll black with breath (0 - 45) */}
-      <Sequence durationInFrames={45}>
+      {/* SCENE 1 — Pre-roll black with breath (0 - 58 = up to first word) */}
+      <Sequence durationInFrames={58}>
         <Breath />
       </Sequence>
 
-      {/* SCENE 2 — "Algo se viene" + REVENTA REAL graffiti (45 - 124) */}
-      <Sequence from={45} durationInFrames={79}>
+      {/* SCENE 2 — "Algo se viene." + REVENTA REAL graffiti (58 - 124) */}
+      <Sequence from={58} durationInFrames={66}>
         <SceneIntro />
       </Sequence>
 
-      {/* SCENE 3 — "Voy a hacer algo que nadie te está contando" (124 - 277) */}
-      <Sequence from={124} durationInFrames={153}>
+      {/* SCENE 3 — "Voy a hacer algo… / que nadie te está contando" (124 - 276) */}
+      <Sequence from={124} durationInFrames={152}>
         <ScenePromise />
       </Sequence>
 
-      {/* SCENE 4a/b/c — RAPID CUTS (277 - 405) */}
-      <Sequence from={277} durationInFrames={32}>
-        <RapidCut src="trailer/image5.jpg" word="CADA" highlight="FLIP" panFrom={-0.05} panTo={0.05} />
-      </Sequence>
-      <Sequence from={309} durationInFrames={32}>
-        <RapidCut src="trailer/image4.jpg" word="CADA" highlight="ERROR" panFrom={0.05} panTo={-0.05} fill />
-      </Sequence>
-      <Sequence from={341} durationInFrames={64}>
-        <RapidCut src="trailer/image2.jpg" word="CADA" highlight="EURO REAL" panFrom={-0.04} panTo={0.04} fill />
-      </Sequence>
-
-      {/* SCENE 5 — "Sin filtros · Sin atajos" (405 - 590) */}
-      <Sequence from={405} durationInFrames={185}>
-        <SceneCraft />
+      {/* SCENE 4a — "CADA FLIP" (276 - 305) */}
+      <Sequence from={276} durationInFrames={29}>
+        <RapidCut
+          src="trailer/image5.jpg"
+          word="CADA"
+          highlight="FLIP"
+          panFrom={-0.05}
+          panTo={0.05}
+        />
       </Sequence>
 
-      {/* SCENE 6 — Atmosphere + sale confirmed close-up (590 - 732) */}
-      <Sequence from={590} durationInFrames={142}>
+      {/* SCENE 4b — "CADA ERROR" (305 - 322) */}
+      <Sequence from={305} durationInFrames={17}>
+        <RapidCut
+          src="trailer/image4.jpg"
+          word="CADA"
+          highlight="ERROR"
+          panFrom={0.05}
+          panTo={-0.05}
+          fill
+        />
+      </Sequence>
+
+      {/* SCENE 4c — "CADA EURO REAL" (322 - 405) */}
+      <Sequence from={322} durationInFrames={83}>
+        <RapidCut
+          src="trailer/image2.jpg"
+          word="CADA"
+          highlight="EURO REAL"
+          panFrom={-0.04}
+          panTo={0.04}
+          fill
+        />
+      </Sequence>
+
+      {/* SCENE 5a — "Sin filtros." (405 - 489) */}
+      <Sequence from={405} durationInFrames={84}>
+        <CraftPart
+          src="trailer/image5.jpg"
+          text="Sin filtros."
+          panFrom={-0.05}
+          panTo={0.05}
+        />
+      </Sequence>
+
+      {/* SCENE 5b — "Sin atajos." (489 - 589) */}
+      <Sequence from={489} durationInFrames={100}>
+        <CraftPart
+          src="trailer/image4.jpg"
+          text="Sin atajos."
+          panFrom={0.05}
+          panTo={-0.05}
+        />
+      </Sequence>
+
+      {/* SCENE 6 — Atmosphere + sale confirmed close-up (589 - 732) */}
+      <Sequence from={589} durationInFrames={143}>
         <SceneSale />
       </Sequence>
 
-      {/* SCENE 7 — "¿Te vienes?" + LOGO REVEAL (732 - 870) */}
-      <Sequence from={732} durationInFrames={42}>
+      {/* SCENE 7 — "¿Te vienes?" on black (732 - 770) */}
+      <Sequence from={732} durationInFrames={38}>
         <SceneTeVienes />
       </Sequence>
-      <Sequence from={760} durationInFrames={110}>
+
+      {/* SCENE 8 — LOGO REVEAL (770 - 870) */}
+      <Sequence from={770} durationInFrames={100}>
         <LogoReveal />
       </Sequence>
 
-      {/* Transition flashes between major beats (subtle for trailer) */}
-      {[45, 124, 277, 309, 341, 405, 590, 732].map((f, i) => (
+      {/* Transition flashes between major beats */}
+      {[58, 124, 276, 305, 322, 405, 489, 589, 732, 770].map((f, i) => (
         <Sequence key={i} from={f - 3} durationInFrames={8} layout="none">
           <SoftFlash />
         </Sequence>
@@ -90,10 +135,7 @@ export const Trailer: React.FC = () => {
         }}
       />
 
-      {/* Top hint - subtle brand corner */}
       <TopBrand />
-
-      {/* Bottom timecode-style ticker (very subtle, trailer feel) */}
       <BottomTick />
     </AbsoluteFill>
   );
@@ -101,15 +143,11 @@ export const Trailer: React.FC = () => {
 
 const Breath: React.FC = () => {
   const frame = useCurrentFrame();
-  const op = interpolate(frame, [0, 30, 45], [0.4, 0, 0], {
+  const op = interpolate(frame, [0, 30, 58], [0.4, 0.1, 0], {
     extrapolateRight: "clamp",
   });
   return (
-    <AbsoluteFill
-      style={{
-        background: "#050505",
-      }}
-    >
+    <AbsoluteFill style={{ background: "#050505" }}>
       <AbsoluteFill
         style={{
           background:
@@ -121,30 +159,52 @@ const Breath: React.FC = () => {
   );
 };
 
+// 66 frames — "Algo se viene." synced from frame 0 of this Sequence
 const SceneIntro: React.FC = () => {
   return (
     <AbsoluteFill>
-      <Sequence durationInFrames={79}>
-        <Letterbox src="trailer/image1.jpg" scaleFrom={1.05} scaleTo={1.15} panFrom={-0.02} panTo={0.02} fill />
+      <Sequence durationInFrames={66}>
+        <Letterbox
+          src="trailer/image1.jpg"
+          scaleFrom={1.05}
+          scaleTo={1.15}
+          panFrom={-0.02}
+          panTo={0.02}
+          fill
+        />
       </Sequence>
-      <Sequence from={6} durationInFrames={73} layout="none">
+      <Sequence durationInFrames={66} layout="none">
         <TrailerCaption text="Algo se viene." size={130} positionY="bottom" />
       </Sequence>
     </AbsoluteFill>
   );
 };
 
+// 152 frames split into two captions:
+//   0   "Voy a hacer algo…"    (matches audio onset 4.12s)
+//   77  "…que nadie te está contando."  (matches audio onset 6.71s = +2.59s = +77 frames)
 const ScenePromise: React.FC = () => {
   return (
     <AbsoluteFill>
-      <Sequence durationInFrames={153}>
-        <Letterbox src="trailer/image3.jpg" panFrom={-0.08} panTo={0.08} scaleFrom={1.1} scaleTo={1.22} fill />
+      <Sequence durationInFrames={152}>
+        <Letterbox
+          src="trailer/image3.jpg"
+          panFrom={-0.08}
+          panTo={0.08}
+          scaleFrom={1.1}
+          scaleTo={1.22}
+          fill
+        />
       </Sequence>
-      <Sequence from={6} durationInFrames={70} layout="none">
-        <TrailerCaption text="Algo que nadie te está contando." size={96} positionY="bottom" />
+      <Sequence durationInFrames={77} layout="none">
+        <TrailerCaption text="Voy a hacer algo…" size={96} positionY="bottom" />
       </Sequence>
-      <Sequence from={82} durationInFrames={71} layout="none">
-        <TrailerCaption text="Voy a enseñarlo todo." size={106} positionY="bottom" />
+      <Sequence from={77} durationInFrames={75} layout="none">
+        <TrailerCaption
+          text="…que nadie te está contando."
+          size={92}
+          positionY="bottom"
+        />
       </Sequence>
     </AbsoluteFill>
   );
@@ -160,58 +220,57 @@ const RapidCut: React.FC<{
 }> = ({ src, word, highlight, panFrom = -0.05, panTo = 0.05, fill = false }) => {
   return (
     <AbsoluteFill>
-      <Sequence durationInFrames={64}>
-        <Letterbox
-          src={src}
-          panFrom={panFrom}
-          panTo={panTo}
-          scaleFrom={1.1}
-          scaleTo={1.2}
-          fadeFrames={3}
-          fill={fill}
-        />
-      </Sequence>
-      <PunchWord text={word} highlight={highlight} size={170} delayFrames={2} />
+      <Letterbox
+        src={src}
+        panFrom={panFrom}
+        panTo={panTo}
+        scaleFrom={1.1}
+        scaleTo={1.2}
+        fadeFrames={3}
+        fill={fill}
+      />
+      <PunchWord text={word} highlight={highlight} size={170} delayFrames={0} />
     </AbsoluteFill>
   );
 };
 
-const SceneCraft: React.FC = () => {
+const CraftPart: React.FC<{
+  src: string;
+  text: string;
+  panFrom?: number;
+  panTo?: number;
+}> = ({ src, text, panFrom = -0.05, panTo = 0.05 }) => {
   return (
     <AbsoluteFill>
-      {/* Sub-scene A: image5 hands ritual + "Sin filtros." */}
-      <Sequence durationInFrames={92}>
-        <Letterbox src="trailer/image5.jpg" panFrom={-0.05} panTo={0.05} scaleFrom={1.08} scaleTo={1.18} fill />
-      </Sequence>
-      <Sequence from={6} durationInFrames={86} layout="none">
-        <TrailerCaption text="Sin filtros." size={140} positionY="bottom" />
-      </Sequence>
-
-      {/* Sub-scene B: image4 sold-out store + "Sin atajos." */}
-      <Sequence from={92} durationInFrames={93}>
-        <Letterbox src="trailer/image4.jpg" panFrom={0.05} panTo={-0.05} scaleFrom={1.06} scaleTo={1.16} fill />
-      </Sequence>
-      <Sequence from={98} durationInFrames={87} layout="none">
-        <TrailerCaption text="Sin atajos." size={140} positionY="bottom" />
-      </Sequence>
-
-      {/* Mid flash between A/B */}
-      <Sequence from={89} durationInFrames={8} layout="none">
-        <SoftFlash />
-      </Sequence>
+      <Letterbox
+        src={src}
+        panFrom={panFrom}
+        panTo={panTo}
+        scaleFrom={1.08}
+        scaleTo={1.18}
+        fadeFrames={4}
+        fill
+      />
+      <TrailerCaption text={text} size={140} positionY="bottom" />
     </AbsoluteFill>
   );
 };
 
+// Atmosphere hold (143 frames = 4.77s) — no caption, just the SALE CONFIRMED
+// image breathing while voiceover continues. The voice in this segment is what
+// the user added between "Sin atajos." and "¿Te vienes?" — captions are
+// intentionally absent to let the visual breathe (cinematic teaser pause).
 const SceneSale: React.FC = () => {
   return (
     <AbsoluteFill>
-      <Sequence durationInFrames={142}>
-        <Letterbox src="trailer/image2.jpg" panFrom={-0.03} panTo={0.03} scaleFrom={1.12} scaleTo={1.25} fill />
-      </Sequence>
-      <Sequence from={20} durationInFrames={80} layout="none">
-        <TrailerCaption text="esto es real." size={120} positionY="bottom" />
-      </Sequence>
+      <Letterbox
+        src="trailer/image2.jpg"
+        panFrom={-0.03}
+        panTo={0.03}
+        scaleFrom={1.12}
+        scaleTo={1.25}
+        fill
+      />
     </AbsoluteFill>
   );
 };
