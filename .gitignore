@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.pyc
+
+# Media: drop your own files in input/, results land in output/
+input/*
+!input/.gitkeep
+output/
+
+# Local test scaffolding
+_smoke.py
+_test_full.py
+_smoke.mp4

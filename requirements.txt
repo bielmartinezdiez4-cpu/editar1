@@ -1,0 +1,6 @@
+moviepy==1.0.3
+openai-whisper
+imageio
+imageio-ffmpeg
+pillow
+numpy
